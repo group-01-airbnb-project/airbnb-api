@@ -7,6 +7,7 @@ import (
 type PaymentRepository interface {
 	Insert(payment models.PaymentEntity) (uint, error)
 	Delete(paymentID uint) error
+	
 }
 
 type PaymentService interface {

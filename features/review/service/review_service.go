@@ -12,8 +12,17 @@ type ReviewService struct {
 	validate   *validator.Validate
 }
 
+// GetAll implements review.ReviewServiceInterface
+func (service *ReviewService) GetAll(homestay_id uint) ([]features.ReviewEntity, error) {
+	reviewUser, err := service.reviewData.SelectAll(homestay_id)
+	if err != nil {
+		return []features.ReviewEntity{}, err
+	}
+	return reviewUser, err
+}
+
 // GetId implements review.ReviewServiceInterface
-func (service *ReviewService) GetId(review_id uint) (features.ReviewEntity,error) {
+func (service *ReviewService) GetId(review_id uint) (features.ReviewEntity, error) {
 	reviewUser, err := service.reviewData.SelectId(review_id)
 	if err != nil {
 		return features.ReviewEntity{}, err

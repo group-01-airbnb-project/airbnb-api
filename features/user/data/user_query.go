@@ -5,7 +5,6 @@ import (
 	"be-api/features/user"
 	"be-api/utils"
 	"errors"
-	"strconv"
 
 	"gorm.io/gorm"
 )
@@ -93,19 +92,7 @@ func (repo *UserData) Insert(input features.UserEntity) (uint,error) {
 	input.Password = hashPassword
 	userData := features.UserEntityToModel(input)
 
-	if userData.Username == "" {
-		str := strconv.Itoa(15)
-		userData.Username = userData.FirstName + "." + userData.LastName + str
-
-		tx := repo.db.Create(&userData)
-		if tx.Error != nil {
-			return 0,tx.Error
-		} else if tx.RowsAffected == 0 {
-			return 0,errors.New("insert data user failed, rows affected 0 ")
-		}
-		id := userData.ID
-		return id,nil
-	}
+	userData.Username = userData.FirstName+" "+userData.LastName
 
 	tx := repo.db.Create(&userData)
 	if tx.Error != nil {

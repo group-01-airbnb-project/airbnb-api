@@ -10,7 +10,6 @@ import (
 
 	"github.com/midtrans/midtrans-go"
 	"github.com/midtrans/midtrans-go/coreapi"
-	"github.com/midtrans/midtrans-go/example"
 )
 
 var c coreapi.Client
@@ -22,7 +21,7 @@ func setupGlobalMidtransConfigApi() {
 }
 
 func chargeWithMapGlobalConfig() {
-	resp, err := coreapi.ChargeTransactionWithMap(example.CoreParam())
+	resp, err := coreapi.ChargeTransactionWithMap(CoreParam())
 	if err != nil {
 		fmt.Println("Error coreapi api, with global config", err.GetMessage())
 	}
@@ -31,13 +30,13 @@ func chargeWithMapGlobalConfig() {
 
 func chargeTransactionWithMap() {
 	// Optional: here is how if you want to set idempotency for this request
-	c.Options.SetPaymentIdempotencyKey(example.Random())
+	c.Options.SetPaymentIdempotencyKey(Random())
 	// Optional: here is how if you want to set context for this request
 	c.Options.SetContext(context.Background())
 	// Optional: here is how if you want to set payment override for this request
 	c.Options.SetPaymentOverrideNotification("https://example.com")
 
-	resp, err := c.ChargeTransactionWithMap(example.CoreParam())
+	resp, err := c.ChargeTransactionWithMap(CoreParam())
 	if err != nil {
 		fmt.Println("Error coreapi api", err.GetMessage())
 	}
@@ -45,7 +44,7 @@ func chargeTransactionWithMap() {
 }
 
 func getCardToken() string {
-	midtrans.ClientKey = "SB-Mid-client-mFPo7qREcM9p6x0y"
+	midtrans.ClientKey = SandboxServerKey1
 	resp, err := coreapi.CardToken("4105058689481467", 12, 2025, "123")
 	if err != nil {
 		fmt.Println("Error get card token", err.GetMessage())
